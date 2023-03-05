@@ -1,0 +1,311 @@
+1)
+
+def main(x):
+    list1 = x.replace('-','- ').split()
+    num = []
+    words = []
+    
+    for x in list1:
+        if x.isdigit(): 
+          num.append(x)
+        else:           
+          words.append(x)
+
+    num = [int(x) for x in num]
+    max = 0
+    for x in words:
+        if max < len(x):
+            max = len(x)
+    return(sum(num), max)
+    
+def take():
+    text = input()
+    if text.isdigit() or text.isalpha():
+        raise Exception('Wrong input!')
+    else:
+        return text
+      
+result = main(take())
+print(result[0], result[1])
+
+
+
+2)
+
+import numpy
+import math
+def main():
+    while True:
+        try:
+            n = list(map(int, input().strip().split()))
+        except ValueError:
+            print('Wrong input. Try again.', end='\n')
+        else:
+            break
+    print(avg(n) + median(n))
+def avg(arr):
+    temp = 0
+    for i in arr:
+        temp += i
+    temp = round(temp/len(arr), 2)
+    return temp
+def median(arr):
+    arr.sort()
+    return arr[len(arr)//2]
+main()
+
+
+
+
+3)
+
+import math
+
+def main():
+    while True:
+        try:
+            n = list(map(int, input().strip().split()))
+        except ValueError:
+            print("Wrong input. Try again.")
+        else:
+            break
+    print(*n)
+    for i in range(len(n) - 1):
+        n = shift(n)
+        print(*n)
+
+def shift(arr):
+    return [arr[-1]] + arr[:-1]
+
+if __name__ == '__main__':
+    main()
+
+
+
+4)
+
+
+import numpy
+import math
+def main():
+    while True:
+        try:
+            n = input().strip().split()
+            substr = str(input())
+            p1 = det(n, substr)
+            if p1 == -1:
+                raise ValueError
+        except ValueError:
+            print('Wrong', end='\n')
+        else:
+            break
+    n[p1] = n[p1].upper()
+    print(*n)
+def det(str, sub):
+    for i in range(len(str)):
+        if str[i] == sub:
+            return i
+    return -1
+main()
+
+
+
+5)
+
+import numpy
+import math
+
+def main():
+    while True:
+        try:
+            n = list(map(int, input().strip().split('/')))
+            if not dmy(n[0], n[1], n[2], 'check'):
+                raise ValueError
+        except ValueError:
+            print('Wrong input.', end='\n')
+        else:
+            break
+    print(f"{n[0]} {dmy(n[0], n[1], n[2], 'strmonth')}, {dmy(n[0], n[1], n[2], 'fixy')}")
+
+def dmy(dd, mm, yyyy, act):
+    months = {
+        'January': 31, 'February': 28, 'March': 31, 'April': 30, 'May': 31, 
+        'June': 30, 'July': 31, 'August': 31, 'September': 30, 'October': 31, 
+        'November': 30, 'December': 31
+    }
+    keys = list(months.keys())
+    vals = list(months.values())
+    if act == 'check':
+        if dd > 0:
+            if mm == 2 : 
+                return ((yyyy % 4 == 0 and yyyy % 100 != 0) or 
+                        (yyyy % 100 == 0 and yyyy % 400 == 0)) and dd < 30 or \
+                       dd < 29
+            else : return vals[mm - 1] >= dd
+        else : return False
+    elif act == 'strmonth' : return keys[mm - 1]
+    elif act == 'fixy':
+        temp = yyyy
+        cnt = 0
+        while temp > 0 : cnt += 1; temp //= 10
+        return (4 - cnt) * '0' + str(yyyy)
+
+main()
+
+
+
+6)
+
+import numpy
+def main():
+    while True:
+        try:
+            n = str(input())
+            temp = set()
+            for i in n:
+                temp.add(i)
+            if n == '' or len(temp) == 1:
+                raise Exception
+        except Exception:
+            print('String is empty or consist of the same symbols.', end='\n')
+        else:
+            break
+    dict = count(n)
+    mx = int(0)
+    letter = ''
+    for i in dict:
+        if i != ' ' and dict[i] > mx:
+            mx = dict[i]
+            letter = i
+    print(letter, mx)
+def count(str):
+    temp = {i : 0 for i in str}
+    for i in str : temp[i] += 1
+    return temp
+main()
+
+
+
+
+7)
+
+import numpy
+
+def main():
+    while True:
+        try:
+            n = str(input())
+            first_char = n[0]
+        except IndexError:
+            print('String is empty. Try to enter non-empty string.', end='\n')
+        else:
+            break
+    char_count = count(n)
+    print(char_count)
+
+def count(str):
+    char_count = {i : 0 for i in str}
+    for i in str:
+        char_count[i] += 1
+    return char_count
+
+main()
+
+
+
+
+8)
+
+import numpy
+
+def main():
+    while True:
+        try:
+            n = int(input("Enter matrix size: "))
+        except ValueError:
+            print("Matrix size cannot be non-integer! Please retry.", end=" ")
+        else:
+            break
+
+    arr = numpy.array([[int(x) for x in input().strip().split(" ")] for _ in range(n)])
+    print(xSum(arr, n))
+
+def xSum(matrix, n, sum=0):
+    for i in range(n):
+        sum += matrix[i][i] + matrix[i][n - i - 1]
+    return sum
+
+main()
+
+
+
+9)
+
+def isfloat(num):
+    return len(num) == 2 and num[0].isdecimal() and num[1].isdecimal()
+
+def determine_type(string):
+    string = string.lower()
+    if string == 'true' or string == 'false':
+        return 'b'
+    elif string.isdecimal():
+        return 'i'
+    elif isfloat(string.split('.')):
+        return 'f'
+    else:
+        return 's'
+
+def main():
+    while True:
+        try:
+            input_str = str(input())
+            input_str[0]
+        except IndexError:
+            print('Input string must be non-empty. Try again!')
+        else:
+            break
+    input_str = input_str.split(' ')
+    type_dict = {}
+    for item in input_str:
+        type_dict[item] = determine_type(item)
+    print(type_dict)
+
+main()
+
+
+
+10)
+
+import numpy as np
+
+def determineArea(arr, i, j, n):
+    size = int(0)
+    for x in range(0, min(n - i, n - j), 1):
+        if arr[i + x][j + x] == 1 and arr[i][j + x] == 1 and arr[i + x][j] == 1:
+            size += 1
+        else:
+            break
+    return size * size
+
+def main():
+    mx = int(0)
+    while True:
+        try:
+            n = int(input("Enter the size of the matrix: "))
+        except ValueError:
+            print('n must be an integer number. Try again!')
+        else:
+            break
+
+    arr = np.array([[int(x) for x in input().strip()] for _ in range(n)])
+    for i in range(n):
+        for j in range(n):
+            if arr[i][j] == 1:
+                mx = max(mx, determineArea(arr, i, j, n))
+
+    print(mx)
+
+main()
+
+
+
